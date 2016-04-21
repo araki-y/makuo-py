@@ -135,11 +135,12 @@ class Makuo(object):
         result = self.do_command(b'status')
         status = {}
         for L in result.splitlines():
-            if L.count(b':') == 1:
-                k, v = L.split(b':')
-                k = k.strip()
-                v = v.strip()
-                status[k] = v
+            if b':' not in L:
+                continue
+            k, v = L.split(b':', 1)
+            k = k.strip()
+            v = v.strip()
+            status[k] = v
         return status
 
     def close(self):
